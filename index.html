@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<input id="samSung">;
+
+<input id="iPhone">;
+<script>
+    let Mobile = function (phone, battery) {
+        this.name = phone;
+        this.battery = battery;
+        this.message = '';
+        this.inbox = [];
+        this.outbox = [];
+        this.writeMessage = function (message) {
+            this.message = message;
+        };
+        this.sendMessage=function () {
+            this.inbox.push(this.message);
+            this.outbox.push(this.message);
+        };
+        this.getInbox = function () {
+            return this.inbox;
+        };
+        this.getOutbox = function () {
+            return this.outbox;
+        };
+
+    };
+    let SsungS9 = new Mobile('samsung', 100);
+
+
+    function testkey() {
+        SsungS9.writeMessage('Hello');
+        SsungS9.sendMessage();
+        console.log(SsungS9.getInbox());
+    }
+
+    testkey();
+</script>
+
+</body>
+</html>
