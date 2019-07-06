@@ -5,10 +5,24 @@
     <title>Title</title>
 </head>
 <body>
-<input id="samSung">;
+<p>
+    <label>SamSung</label><br>
+    <input type="text" id="viewSS"><Br><br>
+    <button onclick="SSsendMessage()">Send</button>
+    <button onclick="SsungInboxMessage()">Inbox</button>
+</p>
+<Br><br>
+<p>
+    <label>Iphone</label><br>
+    <input type="text" id="viewIP"><Br><br>
+    <button onclick="IPsendMessage()">Send</button>
+    <button onclick="IphoneInboxMessage()">Inbox</button>
 
-<input id="iPhone">;
+
+</p>
+
 <script>
+
     let Mobile = function (phone, battery) {
         this.name = phone;
         this.battery = battery;
@@ -16,11 +30,13 @@
         this.inbox = [];
         this.outbox = [];
         this.writeMessage = function (message) {
-            this.message = message;
+            return this.message = message;
         };
-        this.sendMessage=function () {
-            this.inbox.push(this.message);
-            this.outbox.push(this.message);
+        this.sendMessageInbox = function (phone) {
+            phone.inbox.push(this.message);
+        };
+        this.sendMessageOutbox = function (phone) {
+            phone.outbox.push(this.message);
         };
         this.getInbox = function () {
             return this.inbox;
@@ -28,19 +44,46 @@
         this.getOutbox = function () {
             return this.outbox;
         };
+        this.setInbox = function ([]) {
+            this.inbox = [];
+        }
 
     };
-    let SsungS9 = new Mobile('samsung', 100);
+    let viewSS = document.getElementById("viewSS");
+    let viewIP = document.getElementById("viewIP");
 
+    let Iphone = new Mobile('Iphone', 100);
+    let SsungS9 = new Mobile('SsungS9', 100);
 
-    function testkey() {
-        SsungS9.writeMessage('Hello');
-        SsungS9.sendMessage();
-        console.log(SsungS9.getInbox());
+    function SSsendMessage() {
+        SsungS9.writeMessage(viewSS.value);
+        Iphone.setInbox([]);
+        SsungS9.sendMessageInbox(Iphone);
+        SsungS9.sendMessageOutbox(SsungS9);
+        viewSS.value = null;
+        viewIP.value = 'Có tin nhắn';
+        console.log(SsungS9.getOutbox());
     }
 
-    testkey();
-</script>
+    function IPsendMessage() {
+        Iphone.writeMessage(viewIP.value);
+        SsungS9.setInbox([]);
+        Iphone.sendMessageInbox(SsungS9);
+        Iphone.sendMessageOutbox(Iphone);
+        viewIP.value = null;
+        viewSS.value ='Có tin nhắn';
+        console.log(Iphone.getOutbox());
+    }
 
+    function IphoneInboxMessage() {
+        viewIP.value = Iphone.getInbox();
+    }
+
+    function SsungInboxMessage() {
+        viewSS.value = SsungS9.getInbox();
+    }
+
+
+</script>
 </body>
 </html>
